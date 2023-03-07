@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -23,5 +24,11 @@ public class DirectorController {
     public ResponseEntity<?> getDirector(@RequestParam("directorUuid")UUID directorUuid){
         Director director = directorService.getDirector(directorUuid);
         return ResponseEntity.ok(director);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<?> getDirectors(){
+        List<Director> directors = directorService.getDirectors();
+        return ResponseEntity.ok(directors);
     }
 }
