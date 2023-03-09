@@ -4,9 +4,11 @@ import com.example.filmproject.model.Director;
 import com.example.filmproject.service.DirectorService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import java.util.UUID;
 import static org.hamcrest.Matchers.equalTo;
@@ -16,6 +18,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(DirectorController.class)
+@AutoConfigureMockMvc(addFilters = false)
 public class DirectorControllerIntegrationTest {
 
     @Autowired
@@ -25,6 +28,7 @@ public class DirectorControllerIntegrationTest {
     private DirectorService directorService;
 
     @Test
+    @WithMockUser(username="Mikhail",password = "Mokl54")
     public void testSaveDirector() throws Exception {
         Director director = new Director();
         director.setUuid(UUID.randomUUID());
@@ -42,6 +46,7 @@ public class DirectorControllerIntegrationTest {
                 .andExpect(jsonPath("$.country", equalTo("Russia")));
     }
     @Test
+    @WithMockUser(username="Mikhail",password = "Mokl54")
     public void testGetDirector() throws Exception {
         UUID uuid = UUID.randomUUID();
         Director director = new Director();

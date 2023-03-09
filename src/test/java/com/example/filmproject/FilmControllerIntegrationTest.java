@@ -5,9 +5,13 @@ import com.example.filmproject.model.Film;
 import com.example.filmproject.service.FilmService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import java.util.UUID;
 import static org.hamcrest.Matchers.equalTo;
@@ -17,6 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(FilmController.class)
+@AutoConfigureMockMvc(addFilters = false)
 public class FilmControllerIntegrationTest {
 
     @Autowired
@@ -26,6 +31,7 @@ public class FilmControllerIntegrationTest {
     private FilmService filmService;
 
     @Test
+    @WithMockUser(username="Mikhail",password = "Mokl54")
     public void testSaveFilm() throws Exception {
         Film film = new Film();
         film.setUuid(UUID.randomUUID());
@@ -43,7 +49,9 @@ public class FilmControllerIntegrationTest {
                 .andExpect(jsonPath("$.rating", equalTo(10)));
     }
 
+
     @Test
+    @WithMockUser(username="Mikhail",password = "Mokl54")
     public void testGetFilm() throws Exception {
         UUID uuid = UUID.randomUUID();
         Film film = new Film();
