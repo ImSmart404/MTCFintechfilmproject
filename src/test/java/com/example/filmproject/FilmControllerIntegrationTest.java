@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -20,8 +21,8 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(FilmController.class)
 @AutoConfigureMockMvc(addFilters = false)
+@SpringBootTest(classes = FilmprojectApplication.class)
 public class FilmControllerIntegrationTest {
 
     @Autowired
@@ -31,7 +32,6 @@ public class FilmControllerIntegrationTest {
     private FilmService filmService;
 
     @Test
-    @WithMockUser(username="Mikhail",password = "Mokl54")
     public void testSaveFilm() throws Exception {
         Film film = new Film();
         film.setUuid(UUID.randomUUID());
@@ -51,7 +51,6 @@ public class FilmControllerIntegrationTest {
 
 
     @Test
-    @WithMockUser(username="Mikhail",password = "Mokl54")
     public void testGetFilm() throws Exception {
         UUID uuid = UUID.randomUUID();
         Film film = new Film();
