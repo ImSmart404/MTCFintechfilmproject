@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class Counter {
-    private Integer value = 0;
+    private static Integer value = 0;
 
     public synchronized void increment() {
         value++;
