@@ -5,9 +5,14 @@ import com.example.filmproject.model.Film;
 import com.example.filmproject.service.FilmService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import java.util.UUID;
 import static org.hamcrest.Matchers.equalTo;
@@ -16,7 +21,8 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(FilmController.class)
+@AutoConfigureMockMvc(addFilters = false)
+@SpringBootTest(classes = FilmprojectApplication.class)
 public class FilmControllerIntegrationTest {
 
     @Autowired
@@ -42,6 +48,7 @@ public class FilmControllerIntegrationTest {
                 .andExpect(jsonPath("$.genre", equalTo("ACTION")))
                 .andExpect(jsonPath("$.rating", equalTo(10)));
     }
+
 
     @Test
     public void testGetFilm() throws Exception {

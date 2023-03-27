@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,6 +24,12 @@ public class FilmServiceImpl implements FilmService {
     public Film getFilm(UUID filmUuid) {
         Optional<Film> film = filmRepository.findById(filmUuid);
         return film.orElseThrow(()->new ChangeSetPersister.NotFoundException());
+    }
+
+    @Override
+    public List<Film> getFilms(){
+        List<Film> films = filmRepository.findAll();
+        return films;
     }
 
     @Override
